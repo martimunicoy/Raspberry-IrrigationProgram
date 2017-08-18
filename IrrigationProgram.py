@@ -16,7 +16,7 @@ def main():
 	parser.add_option("-l", "--log", dest="log_level", help="set the logging level", metavar="DEBUG, INFO, WARNING, ERROR, CRITICAL")
 	parser.add_option("-t", "--test", dest="test", action='store_true', help="functional test")
 	parser.add_option("-s", "--simulation", dest="sim", action='store_true', help='simulation mode where actually no relay is turned on')
-	parser.add_option("-ld", "--log_dir", dest="log_dir", help="directory of the log file", metavar="FILE_DIRECTORY")
+	parser.add_option("-d", "--log_dir", dest="log_dir", help="directory of the log file", metavar="FILE_DIRECTORY")
 	args_dict = parser.parse_args()[0].__dict__
 
 	log_dir = args_dict['log_dir']
@@ -36,9 +36,9 @@ def main():
 
 	myelectrovalve = Electrovalve(pin=27, **kwargs)
 
-	myinterface = TerminalInterface(t, schedule)
+	t = cycle(myschedule, myelectrovalve, **kwargs)
 
-	cycle(myschedule, myelectrovalve, **kwargs)
+	myinterface = TerminalInterface(t, myschedule)
 
 
 def cycle(schedule, electrovalve, test=False, sim=False):
@@ -53,6 +53,8 @@ def cycle(schedule, electrovalve, test=False, sim=False):
 		print co.TEST_WARNING
 		log.info(co.TEST_WARNING)
 
+	return t
+
 
 def water(schedule, electrovalve, test, sim):
 	for span in map(float, schedule.cycle):
@@ -64,13 +66,13 @@ def water(schedule, electrovalve, test, sim):
 	try:
 		mymail = Mail(schedule)
 		mymail.send_success()
-	else:
+	except:
 		log.logger.error(co.MAIL_ERROR)
 
 	if test:
 		sys.exit(0)
 	# Add a condition to exit if wanted
-	cycle()
+	cycle(schedule, electrovalve, test, sim)
 
 if __name__ == "__main__":
 	main()

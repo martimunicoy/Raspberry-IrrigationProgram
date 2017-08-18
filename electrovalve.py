@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import logging as log
+import constants as co
 
 class Electrovalve(object):
 

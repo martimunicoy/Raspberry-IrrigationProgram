@@ -51,7 +51,7 @@ class Schedule(object):
 	def log_info(self):
 		time_now = today().replace(microsecond=0)
 		sch_str = ""
-		for delay in self.schedule.next_timer():
+		for delay in self.next_timer():
 					hour = (datetime.timedelta(seconds=delay) + today()).replace(microsecond=0)
 					remaining = (datetime.datetime(1970,1,1) + datetime.timedelta(seconds=delay)).replace(microsecond=0)
 					sch_str += "\n    {}            {}".format(hour.time(), remaining.time())
