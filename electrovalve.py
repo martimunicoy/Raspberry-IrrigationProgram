@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import logging
+import logging as log
 
 class Electrovalve(object):
 
@@ -7,22 +7,23 @@ class Electrovalve(object):
 		self.sim = sim
 		self.pin = pin
 		if self.sim:
+			log.info(co.ELECTROVALVE_SIMULATION)
 			return
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setwarnings(False)
 		GPIO.setup(self.pin,GPIO.OUT)
 		GPIO.output(self.pin,GPIO.LOW)
-		logging.info('Electrovalve configurated')
+		log.info(co.ELECTROVALVE_CONFIG.format(str(self.pin)))
 
 	def open(self):
 		if self.sim:
 			return
 		GPIO.output(27,GPIO.HIGH)
-		logging.info('Electrovalve turned on')
+		log.debug(co.ELECTROVALVE_ON)
 
 	def close(self):
 		if self.sim:
 			return
 		GPIO.output(self.pin,GPIO.LOW)
-		logging.info('Electrovalve switched off')
+		log.debug(co.ELECTROVALVE_OFF)
 

@@ -39,3 +39,23 @@ MAIL_MSG = 'Raspberry Pi activated the electrovalve successfully on {}. More inf
 MAIL_ENDING = '\n\nRaspberry Pi.'
 
 MAIL_SUBJECT = 'Irrigation Notification'
+
+MAIL_ERROR = 'No mail could be sent due to an unknown error.'
+
+MAIN_INFO = "Starting Irrigation Program"
+
+CYCLE_DEBUG = "Creating a timer with a delay of {} seconds"
+
+SCHEDULE_TEST = "Created a Schedule for testing."
+
+SCHEDULE_DIR = "No input file found. Using default values for the Schedule."
+
+SCHEDULE_PARSER = 'Reading Schedule information from file {}.'
+
+ELECTROVALVE_SIMULATION = 'Electrovalve simulated.'
+
+ELECTROVALVE_CONFIG = 'Electrovalve configurated on pin {}'
+
+ELECTROVALVE_ON = 'Electrovalve turned on'
+
+ELECTROVALVE_OFF = 'Electrovalve turned off'
