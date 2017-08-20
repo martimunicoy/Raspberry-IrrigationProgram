@@ -1,7 +1,6 @@
 import smtplib
 import constants as co
 import timing
-import datetime
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 
@@ -23,15 +22,11 @@ class Mail(object):
         msg['To'] = receiver
         msg['Subject'] = co.MAIL_SUBJECT
 
-        time_now = timing.today().replace(microsecond=0)
+        time_now = timing.today()
         sch_str = ""
-        for delay in self.schedule.next_timer():
-            hour = (datetime.timedelta(seconds=delay) +
-                    timing.today()).replace(microsecond=0)
-            remaining = (datetime.datetime(1970, 1, 1) + datetime.timedelta(
-                seconds=delay)).replace(microsecond=0)
-            sch_str += "\n    {}            {}".format(hour.time(),
-                                                       remaining.time())
+        for hour in self.schedule.hours:
+            sch_str += "\n    {}            {}".format(
+                hour.time, hour.lag_time())
         cyc_str = ""
         for output, tm in zip(co.CYCLE_OUTPUTS, self.schedule.cycle):
             cyc_str += "\n{}         {}".format(output, tm)
