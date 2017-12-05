@@ -119,6 +119,7 @@ class TerminalInterface(object):
                 else:
                     print co.HOUR_NOT_ADDED
 
+            # REMOVE_HOUR
             elif key == 10 and len(parsed_com) == 2:
                 old_hour = timing.Hour(*map(int, parsed_com[1].split(":")))
                 for hour in self.schedule.hours:
